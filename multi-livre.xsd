@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://example.com/webx/multi-livre"
+  xmlns:tns="https://example.com/webx/multi-livre"
+  elementFormDefault="qualified">
+  <xs:element name="Response" type="tns:ResponseType" />
+  <xs:complexType name="ResponseType">
+    <xs:choice>
+      <xs:element name="error" type="tns:ErrorType" />
+      <xs:element name="result" type="tns:ResultType" />
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="ErrorType">
+    <!-- the name of the REST API that failed and its HTTP status code -->
+    <xs:attribute name="api" type="xs:string" />
+    <xs:attribute name="status" type="xs:int" />
+  </xs:complexType>
+  <xs:complexType name="ResultType">
+    <xs:sequence>
+      <xs:element name="titre" type="xs:string" />
+      <xs:element name="auteur" type="tns:AuteurType" minOccurs="0"
+        maxOccurs="unbounded" />
+        <xs:element name="bibliotheque" type="tns:BibliothequeType"
+          minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AuteurType">
+        <xs:all>
+          <xs:element name="prenom" type="xs:string" />
+          <xs:element name="nom" type="xs:string" />
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="BibliothequeType">
+        <xs:all>
+          <xs:element name="nom" type="xs:string" />
+          <xs:element name="distance" type="xs:double" />
+        </xs:all>
+      </xs:complexType>
+      <xs:element name="Request" type="tns:RequestType" />
+      <xs:complexType name="RequestType">
+        <xs:sequence>
+          <xs:element name="doi" type="xs:string" />
+          <xs:element name="adresse" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
